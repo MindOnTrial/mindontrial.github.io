@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mind on Trial</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --navy: #1c2b4a;
+      --navy-dark: #111c30;
+      --navy-mid: #243359;
+      --beige: #f5f0e6;
+      --beige-dark: #ede6d6;
+      --beige-mid: #e8dfc9;
+      --gold: #c8a84b;
+      --gold-light: #dfc278;
+      --gold-pale: #f0e4bc;
+      --white: #ffffff;
+      --text-dark: #1c2b4a;
+      --text-body: #3a4a66;
+      --text-light: #7a8aaa;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Jost', sans-serif;
+      background-color: var(--beige);
+      color: var(--text-dark);
+      overflow-x: hidden;
+    }
+
+    /* ── NAVBAR ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: var(--navy-dark);
+      border-bottom: 1px solid rgba(200,168,75,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 60px;
+      height: 68px;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .nav-logo-mark {
+      width: 36px;
+      height: 36px;
+      border: 2px solid var(--gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 0;
+      flex-shrink: 0;
+    }
+
+    .nav-logo-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--beige);
+      letter-spacing: 0.06em;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      font-family: 'Jost', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(245,240,230,0.7);
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--gold); }
+
+    .nav-cta {
+      background: transparent;
+      border: 1px solid var(--gold);
+      color: var(--gold) !important;
+      padding: 7px 18px;
+      border-radius: 2px;
+      transition: background 0.2s, color 0.2s !important;
+    }
+    .nav-cta:hover {
+      background: var(--gold) !important;
+      color: var(--navy-dark) !important;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      background: var(--navy-dark);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 40px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 100%, rgba(200,168,75,0.08) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 40% at 20% 20%, rgba(28,43,74,0.8) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .hero-ornament {
+      width: 1px;
+      height: 60px;
+      background: linear-gradient(to bottom, transparent, var(--gold));
+      margin: 0 auto 32px;
+      opacity: 0;
+      animation: fadeDown 1s ease 0.3s forwards;
+    }
+
+    .hero-label {
+      font-family: 'Jost', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 24px;
+      opacity: 0;
+      animation: fadeUp 0.9s ease 0.5s forwards;
+    }
+
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(52px, 9vw, 110px);
+      font-weight: 300;
+      color: var(--beige);
+      line-height: 0.95;
+      letter-spacing: -0.01em;
+      margin-bottom: 32px;
+      opacity: 0;
+      animation: fadeUp 1s ease 0.7s forwards;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--gold-light);
+    }
+
+    .hero-divider {
+      width: 60px;
+      height: 1px;
+      background: var(--gold);
+      margin: 0 auto 32px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.9s forwards;
+    }
+
+    .hero-mission {
+      max-width: 620px;
+      font-family: 'Jost', sans-serif;
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: rgba(245,240,230,0.75);
+      margin: 0 auto 48px;
+      opacity: 0;
+      animation: fadeUp 0.9s ease 1.1s forwards;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.9s ease 1.3s forwards;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--navy-dark);
+      text-decoration: none;
+      font-family: 'Jost', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      padding: 14px 36px;
+      border-radius: 2px;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .btn-primary:hover {
+      background: var(--gold-light);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      display: inline-block;
+      background: transparent;
+      color: var(--beige);
+      text-decoration: none;
+      font-family: 'Jost', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      padding: 14px 36px;
+      border-radius: 2px;
+      border: 1px solid rgba(245,240,230,0.3);
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-secondary:hover {
+      border-color: var(--beige);
+      color: var(--white);
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 36px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 1.8s forwards;
+    }
+
+    .hero-scroll span {
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(245,240,230,0.35);
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 36px;
+      background: linear-gradient(to bottom, rgba(245,240,230,0.35), transparent);
+      animation: scrollPulse 2s ease infinite;
+    }
+
+    /* ── SECTION SHARED ── */
+    section { padding: 100px 60px; }
+
+    .section-label {
+      font-family: 'Jost', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      max-width: 40px;
+      height: 1px;
+      background: var(--gold);
+      opacity: 0.5;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(36px, 5vw, 58px);
+      font-weight: 400;
+      line-height: 1.1;
+      color: var(--navy-dark);
+      margin-bottom: 16px;
+    }
+
+    .section-title em {
+      font-style: italic;
+      color: var(--navy-mid);
+    }
+
+    /* ── WHAT WE PUBLISH ── */
+    .publish-section {
+      background: var(--beige);
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .publish-intro {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+      margin-bottom: 80px;
+    }
+
+    .publish-intro-text {
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.9;
+      color: var(--text-body);
+    }
+
+    .publish-intro-text a {
+      color: var(--navy);
+      font-weight: 500;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .publish-cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+      background: var(--beige-mid);
+    }
+
+    .publish-card {
+      background: var(--beige);
+      padding: 36px 28px;
+      transition: background 0.25s;
+      cursor: default;
+    }
+
+    .publish-card:hover { background: var(--white); }
+
+    .publish-card-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 48px;
+      font-weight: 300;
+      color: var(--gold-pale);
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+
+    .publish-card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--navy-dark);
+      margin-bottom: 12px;
+      line-height: 1.3;
+    }
+
+    .publish-card-text {
+      font-size: 13px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--text-body);
+    }
+
+    /* ── LATEST PIECES ── */
+    .latest-section {
+      background: var(--navy-dark);
+      padding: 100px 60px;
+    }
+
+    .latest-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .latest-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 56px;
+    }
+
+    .latest-header .section-label { color: var(--gold); }
+    .latest-header .section-title { color: var(--beige); margin-bottom: 0; }
+
+    .latest-view-all {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(200,168,75,0.4);
+      padding-bottom: 3px;
+      transition: border-color 0.2s;
+      white-space: nowrap;
+      margin-bottom: 4px;
+    }
+    .latest-view-all:hover { border-color: var(--gold); }
+
+    .pieces-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 2px;
+    }
+
+    .piece-card {
+      background: var(--navy-mid);
+      padding: 40px 36px;
+      transition: background 0.25s;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .piece-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 2px;
+      background: var(--gold);
+      transition: width 0.3s ease;
+    }
+
+    .piece-card:hover { background: rgba(255,255,255,0.05); }
+    .piece-card:hover::after { width: 100%; }
+
+    .piece-card.featured { padding: 52px 44px; }
+
+    .piece-tag {
+      display: inline-block;
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid rgba(200,168,75,0.4);
+      padding: 4px 10px;
+      border-radius: 1px;
+      margin-bottom: 20px;
+    }
+
+    .piece-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      color: var(--beige);
+      line-height: 1.25;
+      margin-bottom: 16px;
+    }
+
+    .piece-card.featured .piece-title { font-size: 32px; }
+    .piece-card:not(.featured) .piece-title { font-size: 20px; }
+
+    .piece-excerpt {
+      font-size: 13px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: rgba(245,240,230,0.55);
+      margin-bottom: 28px;
+    }
+
+    .piece-meta {
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      color: rgba(245,240,230,0.35);
+    }
+
+    /* ── QUOTE SECTION ── */
+    .quote-section {
+      background: var(--beige-dark);
+      padding: 0;
+    }
+
+    .quotes-track {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 90px 60px;
+    }
+
+    .quote-display {
+      text-align: center;
+      max-width: 780px;
+      margin: 0 auto;
+    }
+
+    .quote-mark {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 120px;
+      line-height: 0.5;
+      color: var(--gold);
+      opacity: 0.3;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .quote-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(22px, 3vw, 34px);
+      font-weight: 400;
+      font-style: italic;
+      line-height: 1.5;
+      color: var(--navy-dark);
+      margin-bottom: 32px;
+    }
+
+    .quote-attribution {
+      font-family: 'Jost', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-light);
+    }
+
+    .quote-attribution span {
+      color: var(--gold);
+      margin-right: 8px;
+    }
+
+    .quote-dots {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin-top: 40px;
+    }
+
+    .quote-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--beige-mid);
+      cursor: pointer;
+      transition: background 0.2s;
+      border: none;
+    }
+
+    .quote-dot.active { background: var(--gold); }
+
+    /* ── THE FRAMEWORK ── */
+    .framework-section {
+      background: var(--white);
+      padding: 100px 60px;
+    }
+
+    .framework-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 100px;
+      align-items: center;
+    }
+
+    .framework-visual {
+      position: relative;
+    }
+
+    .lens-item {
+      background: var(--beige);
+      border-left: 3px solid var(--gold);
+      padding: 28px 32px;
+      margin-bottom: 3px;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .lens-item:hover {
+      background: var(--navy-dark);
+    }
+
+    .lens-item:hover .lens-num,
+    .lens-item:hover .lens-name,
+    .lens-item:hover .lens-desc { color: var(--beige); }
+
+    .lens-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
+
+    .lens-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--navy-dark);
+      margin-bottom: 8px;
+    }
+
+    .lens-desc {
+      font-size: 13px;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--text-body);
+    }
+
+    .framework-text .section-label { justify-content: flex-start; }
+
+    .framework-text p {
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.9;
+      color: var(--text-body);
+      margin-bottom: 16px;
+    }
+
+    .framework-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--navy);
+      text-decoration: none;
+      margin-top: 16px;
+      border-bottom: 1px solid var(--navy);
+      padding-bottom: 3px;
+    }
+
+    /* ── SUBMIT SECTION ── */
+    .submit-section {
+      background: var(--navy-dark);
+      padding: 100px 60px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .submit-section::before {
+      content: '';
+      position: absolute;
+      top: -200px; right: -200px;
+      width: 600px; height: 600px;
+      border: 1px solid rgba(200,168,75,0.1);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .submit-section::after {
+      content: '';
+      position: absolute;
+      bottom: -300px; right: -100px;
+      width: 700px; height: 700px;
+      border: 1px solid rgba(200,168,75,0.06);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .submit-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .submit-left .section-label { color: var(--gold); }
+    .submit-left .section-title { color: var(--beige); }
+
+    .submit-left p {
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.9;
+      color: rgba(245,240,230,0.65);
+      margin-bottom: 36px;
+    }
+
+    .submit-themes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 40px;
+    }
+
+    .theme-tag {
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      color: rgba(245,240,230,0.6);
+      border: 1px solid rgba(245,240,230,0.2);
+      padding: 6px 14px;
+      border-radius: 20px;
+    }
+
+    .submit-form {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(200,168,75,0.2);
+      padding: 48px 44px;
+      border-radius: 2px;
+    }
+
+    .submit-form h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px;
+      font-weight: 600;
+      color: var(--beige);
+      margin-bottom: 8px;
+    }
+
+    .submit-form p {
+      font-size: 13px;
+      font-weight: 300;
+      color: rgba(245,240,230,0.5);
+      margin-bottom: 28px;
+      line-height: 1.7;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(245,240,230,0.45);
+      margin-bottom: 6px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(245,240,230,0.15);
+      border-radius: 2px;
+      padding: 12px 16px;
+      font-family: 'Jost', sans-serif;
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--beige);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--gold);
+    }
+
+    .form-group select option { background: var(--navy-dark); }
+    .form-group textarea { height: 90px; resize: vertical; }
+
+    .form-submit {
+      width: 100%;
+      background: var(--gold);
+      color: var(--navy-dark);
+      border: none;
+      padding: 14px;
+      font-family: 'Jost', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      border-radius: 2px;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: background 0.2s;
+    }
+
+    .form-submit:hover { background: var(--gold-light); }
+
+    /* ── CONTACT STRIP ── */
+    .contact-strip {
+      background: var(--beige-mid);
+      padding: 60px;
+    }
+
+    .contact-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+
+    .contact-text h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 400;
+      color: var(--navy-dark);
+      margin-bottom: 6px;
+    }
+
+    .contact-text p {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--text-body);
+    }
+
+    .contact-email {
+      display: inline-block;
+      font-family: 'Jost', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      color: var(--navy);
+      text-decoration: none;
+      border-bottom: 1px solid var(--navy);
+      padding-bottom: 2px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy-dark);
+      padding: 60px 60px 40px;
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 60px;
+      margin-bottom: 60px;
+      padding-bottom: 60px;
+      border-bottom: 1px solid rgba(245,240,230,0.1);
+    }
+
+    .footer-brand p {
+      font-size: 13px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: rgba(245,240,230,0.45);
+      margin-top: 16px;
+    }
+
+    .footer-col h4 {
+      font-family: 'Jost', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+
+    .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .footer-col ul li a {
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 300;
+      color: rgba(245,240,230,0.5);
+      transition: color 0.2s;
+    }
+
+    .footer-col ul li a:hover { color: var(--beige); }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-bottom p {
+      font-size: 12px;
+      font-weight: 300;
+      color: rgba(245,240,230,0.25);
+    }
+
+    .footer-bottom p strong {
+      color: rgba(245,240,230,0.45);
+      font-weight: 400;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to   { opacity: 0.8; transform: translateY(0); }
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 0.8; }
+    }
+
+    .fade-in-up {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-in-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 0 24px; }
+      section { padding: 70px 24px; }
+      .publish-cards { grid-template-columns: 1fr 1fr; }
+      .pieces-grid { grid-template-columns: 1fr; }
+      .framework-inner { grid-template-columns: 1fr; gap: 48px; }
+      .publish-intro { grid-template-columns: 1fr; gap: 32px; }
+      .submit-inner { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
+      .latest-section, .submit-section, footer { padding: 70px 24px; }
+      .contact-strip { padding: 48px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAVBAR ── -->
+  <nav>
+    <a href="#" class="nav-logo">
+      <div class="nav-logo-mark">M</div>
+      <span class="nav-logo-text">Mind on Trial</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#pieces">Publications</a></li>
+      <li><a href="#framework">Framework</a></li>
+      <li><a href="#submit" class="nav-cta">Submit Work</a></li>
+    </ul>
+  </nav>
+
+  <!-- ── HERO ── -->
+  <section class="hero" id="home">
+    <div class="hero-ornament"></div>
+    <p class="hero-label">A Youth-Led Nonprofit Publication</p>
+    <h1>Mind<br><em>on Trial</em></h1>
+    <div class="hero-divider"></div>
+    <p class="hero-mission">
+      A publication for students who think across disciplines — connecting the science of the brain, the study of behavior, and the workings of the law through both rigorous analysis and creative expression.
+    </p>
+    <div class="hero-buttons">
+      <a href="#about" class="btn-primary">Our Mission</a>
+      <a href="#pieces" class="btn-secondary">Read Latest</a>
+    </div>
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- ── WHAT WE PUBLISH ── -->
+  <section id="about" style="padding: 100px 60px;">
+    <div class="publish-section fade-in-up">
+      <div class="publish-intro">
+        <div>
+          <div class="section-label">What We Do</div>
+          <h2 class="section-title">Where the brain,<br><em>behavior & law</em><br>meet.</h2>
+        </div>
+        <div class="publish-intro-text">
+          Mind on Trial is a student-led nonprofit publication built on one central idea: neuroscience, human behavior, and the law belong in conversation with each other — and students are ready for that conversation.<br><br>
+          We publish rigorous case analyses, accessible science explainers, and a literary journal where creative work is paired with neuroscience interpretation. Our analytical work comes from our school-based forensic analysis club. Our literary journal is open to students everywhere.<br><br>
+          <a href="#about">Read our full story →</a>
+        </div>
+      </div>
+
+      <div class="publish-cards">
+        <div class="publish-card">
+          <div class="publish-card-number">01</div>
+          <div class="publish-card-title">Case-Based Analyses</div>
+          <p class="publish-card-text">Real forensic and behavioral cases examined through our three-lens framework — scientific evidence, neuroscience, and legal outcome.</p>
+        </div>
+        <div class="publish-card">
+          <div class="publish-card-number">02</div>
+          <div class="publish-card-title">Science Explainers</div>
+          <p class="publish-card-text">Plain-language articles on memory, impulse control, adolescent brain development, psychiatric genetics, and more.</p>
+        </div>
+        <div class="publish-card">
+          <div class="publish-card-number">03</div>
+          <div class="publish-card-title">Neuro-Law Summaries</div>
+          <p class="publish-card-text">Accessible breakdowns of real legal cases where brain science played a role — making legal reasoning legible to non-lawyers.</p>
+        </div>
+        <div class="publish-card">
+          <div class="publish-card-number">04</div>
+          <div class="publish-card-title">Literary Journal</div>
+          <p class="publish-card-text">Student creative work — essays, poetry, fiction, art — on themes of memory, identity, justice, and behavior. Each piece optionally paired with a neuroscience interpretation.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── LATEST PIECES ── -->
+  <section class="latest-section" id="pieces">
+    <div class="latest-inner fade-in-up">
+      <div class="latest-header">
+        <div>
+          <div class="section-label">Latest</div>
+          <h2 class="section-title" style="color: var(--beige);">Recent <em style="color: var(--gold-light);">Publications</em></h2>
+        </div>
+        <a href="#" class="latest-view-all">View All →</a>
+      </div>
+
+      <div class="pieces-grid">
+        <div class="piece-card featured">
+          <span class="piece-tag">Case Analysis</span>
+          <h3 class="piece-title">The Adolescent Brain on Trial: How Neuroscience Changed Juvenile Sentencing</h3>
+          <p class="piece-excerpt">An examination of Roper v. Simmons through the three-lens framework — what the evidence showed, what brain science tells us about the teenage prefrontal cortex, and how the Supreme Court incorporated neuroscience into its landmark ruling.</p>
+          <span class="piece-meta">April 2027 &nbsp;·&nbsp; 8 min read</span>
+        </div>
+        <div class="piece-card">
+          <span class="piece-tag">Literary Journal</span>
+          <h3 class="piece-title">What the Water Remembers</h3>
+          <p class="piece-excerpt">A poem on forgetting, paired with an exploration of how memory consolidation actually works.</p>
+          <span class="piece-meta">March 2027 &nbsp;·&nbsp; 3 min read</span>
+        </div>
+        <div class="piece-card">
+          <span class="piece-tag">Explainer</span>
+          <h3 class="piece-title">What Is Neurolaw — and Why Does It Matter?</h3>
+          <p class="piece-excerpt">An introduction to one of the fastest-growing and most underbuilt areas at the intersection of medicine and law.</p>
+          <span class="piece-meta">March 2027 &nbsp;·&nbsp; 5 min read</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── QUOTES ── -->
+  <section class="quote-section">
+    <div class="quotes-track fade-in-up">
+      <div class="quote-display" id="quoteDisplay">
+        <span class="quote-mark">"</span>
+        <p class="quote-text" id="quoteText">The brain is the organ of destiny. It holds within its humming mechanism secrets that will determine the future of the human race.</p>
+        <p class="quote-attribution"><span>—</span> <span id="quoteAuthor">Wilder Penfield</span>, Neurosurgeon</p>
+      </div>
+      <div class="quote-dots">
+        <button class="quote-dot active" onclick="setQuote(0)"></button>
+        <button class="quote-dot" onclick="setQuote(1)"></button>
+        <button class="quote-dot" onclick="setQuote(2)"></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── THE FRAMEWORK ── -->
+  <section class="framework-section" id="framework">
+    <div class="framework-inner fade-in-up">
+      <div class="framework-visual">
+        <div class="lens-item">
+          <div class="lens-num">Lens One</div>
+          <div class="lens-name">Forensic & Scientific Reasoning</div>
+          <p class="lens-desc">What actually happened? What does the physical evidence, medical record, or behavioral data show?</p>
+        </div>
+        <div class="lens-item">
+          <div class="lens-num">Lens Two</div>
+          <div class="lens-name">Cognitive Neuroscience</div>
+          <p class="lens-desc">Why might it have happened in terms of how the brain works — impulse control, memory, stress, mental illness?</p>
+        </div>
+        <div class="lens-item">
+          <div class="lens-num">Lens Three</div>
+          <div class="lens-name">Legal Interpretation</div>
+          <p class="lens-desc">How does the law respond? What is the person's legal responsibility, and what role does mental state play?</p>
+        </div>
+      </div>
+
+      <div class="framework-text">
+        <div class="section-label">Our Method</div>
+        <h2 class="section-title">The Neuro-Legal<br><em>Case Analysis</em><br>Framework</h2>
+        <p>Every case we analyze is examined through three lenses at once: the scientific evidence, the brain science behind the behavior, and the legal outcome. These three questions give genuinely different — sometimes conflicting — answers.</p>
+        <p>Understanding all three together is more powerful than any one alone. This framework sits at the core of everything Mind on Trial publishes.</p>
+        <a href="#" class="framework-link">Learn more about our method →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SUBMIT ── -->
+  <section class="submit-section" id="submit">
+    <div class="submit-inner fade-in-up">
+      <div class="submit-left">
+        <div class="section-label" style="color: var(--gold);">Literary Journal</div>
+        <h2 class="section-title" style="color: var(--beige);">Submit <em style="color: var(--gold-light);">Your Work</em></h2>
+        <p>Mind on Trial's literary journal is open to students from any school. We welcome essays, poetry, fiction, and artwork exploring the themes that sit at the intersection of mind, memory, identity, and justice.</p>
+        <p style="font-size:13px; color: rgba(245,240,230,0.5);">Our signature feature: each accepted piece can be paired with a short neuroscience interpretation — 150 to 250 words written by our editorial team — connecting the themes of your work to a real scientific concept.</p>
+        <div class="submit-themes">
+          <span class="theme-tag">Memory & Forgetting</span>
+          <span class="theme-tag">Identity & Self</span>
+          <span class="theme-tag">Perception & Reality</span>
+          <span class="theme-tag">Behavior & Choice</span>
+          <span class="theme-tag">Mental Illness</span>
+          <span class="theme-tag">Justice & Responsibility</span>
+        </div>
+        <a href="#" class="btn-primary">Full Submission Guidelines</a>
+      </div>
+
+      <div class="submit-form">
+        <h3>Submit Your Work</h3>
+        <p>Fill out the form below to submit a piece for consideration in our literary journal.</p>
+        <div class="form-group">
+          <label>Your Name</label>
+          <input type="text" placeholder="First and last name" />
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" placeholder="your@email.com" />
+        </div>
+        <div class="form-group">
+          <label>School</label>
+          <input type="text" placeholder="School name" />
+        </div>
+        <div class="form-group">
+          <label>Submission Type</label>
+          <select>
+            <option value="" disabled selected>Select a type</option>
+            <option>Essay</option>
+            <option>Poetry</option>
+            <option>Fiction</option>
+            <option>Artwork</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Brief Description</label>
+          <textarea placeholder="Tell us briefly what your piece is about..."></textarea>
+        </div>
+        <button class="form-submit">Submit for Review</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CONTACT STRIP ── -->
+  <div class="contact-strip">
+    <div class="contact-inner">
+      <div class="contact-text">
+        <h3>Get in Touch</h3>
+        <p>Questions about the publication, partnerships, or joining our editorial team?</p>
+      </div>
+      <a href="mailto:hello@mindontrial.org" class="contact-email">hello@mindontrial.org</a>
+    </div>
+  </div>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="nav-logo" style="text-decoration:none; display:inline-flex;">
+            <div class="nav-logo-mark">M</div>
+            <span class="nav-logo-text" style="margin-left:12px;">Mind on Trial</span>
+          </div>
+          <p>A youth-led nonprofit publication at the intersection of neuroscience, behavior, and law. Built by students, for students.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Publish</h4>
+          <ul>
+            <li><a href="#">Case Analyses</a></li>
+            <li><a href="#">Science Explainers</a></li>
+            <li><a href="#">Neuro-Law Summaries</a></li>
+            <li><a href="#">Literary Journal</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>About</h4>
+          <ul>
+            <li><a href="#">Our Mission</a></li>
+            <li><a href="#">The Framework</a></li>
+            <li><a href="#">Editorial Team</a></li>
+            <li><a href="#">Advisory Board</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Get Involved</h4>
+          <ul>
+            <li><a href="#">Submit Your Work</a></li>
+            <li><a href="#">Join the Team</a></li>
+            <li><a href="#">Contact Us</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 <strong>Mind on Trial</strong>. All rights reserved. A registered nonprofit organization.</p>
+        <p>mindontrial.org</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Quote rotator
+    const quotes = [
+      {
+        text: "The brain is the organ of destiny. It holds within its humming mechanism secrets that will determine the future of the human race.",
+        author: "Wilder Penfield",
+        title: "Neurosurgeon"
+      },
+      {
+        text: "The law must take a person as it finds them — but what if what it finds has been shaped by forces entirely beyond their control?",
+        author: "Mind on Trial",
+        title: "Editorial Premise"
+      },
+      {
+        text: "Memory is not a recording of the past. It is a reconstruction of it — and reconstructions can be wrong.",
+        author: "Elizabeth Loftus",
+        title: "Cognitive Psychologist"
+      }
+    ];
+
+    let currentQuote = 0;
+
+    function setQuote(index) {
+      currentQuote = index;
+      document.getElementById('quoteText').textContent = quotes[index].text;
+      document.getElementById('quoteAuthor').textContent = quotes[index].author + ', ' + quotes[index].title;
+      document.querySelectorAll('.quote-dot').forEach((d, i) => {
+        d.classList.toggle('active', i === index);
+      });
+    }
+
+    setInterval(() => {
+      setQuote((currentQuote + 1) % quotes.length);
+    }, 6000);
+
+    // Scroll fade-in
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-in-up').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
